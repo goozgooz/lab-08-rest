@@ -10,3 +10,5 @@ class Note {
     this.content = config.content || '';
   }
 }
+
+module.exports = Note;
