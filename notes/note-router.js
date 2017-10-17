@@ -3,26 +3,33 @@
 const router = require('../lib/router.js');
 const Note = require('./model.js');
 const response = require('../lib/response.js');
-
-let notes = [];
+const fs = require('fs-extra');
+const database = ('./data/notes.dat');
 
 router.post('/api/notes', (req,res) => {
   try {
     let note = new Note(req.body);
-    notes.push(note);
-    response.sendJSON(res, 200, note);
+    
+    let data = {};
+    data[note.id] = note;
+    let saveNote = JSON.stringify(note);
+
+    fs.outputFile(database, saveNote)
+      .then(response.sendJSON(res, 200, note))
+      .catch(err => response.sendStatus(res, 400, err));
   } catch (err) {
-    res.sendStatus(res, 400, 'poorly given info');
+    response.sendStatus(res, 400, 'poorly given info');
   }
 });
 
 router.get('/api/notes', (req,res) => {
-
   if(req.url.query.id){
     response.sendStatus(res,200,'you gave an id');
   } else{
-    let allNotes = {notes:notes};
-    response.sendJSON(res,200,allNotes);  
+    fs.readJson(database)
+      .then(notes => response.sendJSON(res, 200, notes))
+      .catch(err => response.sendStatus(res, 400, err));
   }
 
 });
+ 
