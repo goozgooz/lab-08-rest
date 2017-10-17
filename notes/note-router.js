@@ -12,21 +12,17 @@ router.post('/api/notes', (req,res) => {
     notes.push(note);
     response.sendJSON(res, 200, note);
   } catch (err) {
-    console.log(err);
+    res.sendStatus(res, 400, 'poorly given info');
   }
-  response.sendStatus(res, 200, 'post request');
-
-
-  // if(!req.body) return response.sendStatus(res, 400, 'no info given');
-  // let note = new Note(req.body);
-  // notes.push(note);
-  // response.sendJSON(res, 200, note);
-  // response.sendStatus(res, 200, 'post request');
 });
 
 router.get('/api/notes', (req,res) => {
-  // notes.forEach(note => {
-  //   response.sendJSON(res, 200, note);
-  // });
-  response.sendStatus(res, 200, 'get request');
+
+  if(req.url.query.id){
+    response.sendStatus(res,200,'you gave an id');
+  } else{
+    let allNotes = {notes:notes};
+    response.sendJSON(res,200,allNotes);  
+  }
+
 });
