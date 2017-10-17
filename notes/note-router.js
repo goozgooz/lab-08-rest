@@ -34,7 +34,7 @@ router.get('/api/notes', (req,res) => {
   } else{
     fs.readJson(database)
       .then(notes => response.sendJSON(res, 200, notes))
-      .catch(err => response.sendStatus(res, 400, 'error reading JSON'));
+      .catch(err => response.sendStatus(res, 400, 'nothing in database'));
   }
 });
  
@@ -43,13 +43,15 @@ router.delete('/api/notes', (req,res) => {
     let id = req.url.query.id;
     fs.readJson(database)
       .then(notes => {
+        console.log('deleting', id);
         delete notes[id];
+        fs.outputFile(database, notes);
         response.sendJSON(res, 200, 'note deleted');
       })
       .catch(err => response.sendStatus(res, 400, 'derp!'));
   } else{
     fs.readJson(database)
       .then(notes => response.sendJSON(res, 200, notes))
-      .catch(err => response.sendStatus(res, 400, 'error reading JSON'));
+      .catch(err => response.sendStatus(res, 400, 'error nothing in database'));
   }
 });
