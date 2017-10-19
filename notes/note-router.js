@@ -7,9 +7,7 @@ const database = __dirname + '/../data/notes.dat';
 const storage = require('../lib/storage.js')(database);
 
 router.post('/api/notes', (req,res) => {
-  
   let note = new Note(req.body);
-  console.log(note);
   storage.saveItem(note)
     .then(notes => response.sendJSON(res, 200, notes))
     .catch(err => response.sendStatus(res,400, 'poorly formatted JSON'));
@@ -20,7 +18,9 @@ router.get('/api/notes', (req,res) => {
   let id = req.url && req.url.query && req.url.query.id;
 
   if(id) {
-    // print specific note out
+    storage.getItemID(id)
+      .then(note => response.sendJSON(res,200,note))
+      .catch( () => response.sendStatus(res,400, 'that note does not exist'));
   } else {
     storage.getItems()
       .then(allNotes => {
