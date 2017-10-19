@@ -3,8 +3,8 @@
 const router = require('../lib/router.js');
 const Note = require('./model.js');
 const response = require('../lib/response.js');
-const fs = require('fs-extra');
 const database = ('./data/notes.dat');
+const storage = require('../lib/storage')(database);
 
 router.post('/api/notes', (req,res) => {
   try {
@@ -32,10 +32,13 @@ router.get('/api/notes', (req,res) => {
       })
       .catch(err => response.sendStatus(res, 400, 'id does not exist'));
   } else{
-    fs.readJson(database)
-      .then(notes => response.sendJSON(res, 200, notes))
-      .catch(err => response.sendStatus(res, 400, 'nothing in database'));
-  }
+      storage.getItems()
+        .then()
+        .catch()
+  //   fs.readJson(database)
+  //     .then(notes => response.sendJSON(res, 200, notes))
+  //     .catch(err => response.sendStatus(res, 400, 'nothing in database'));
+  // }
 });
  
 router.delete('/api/notes', (req,res) => {

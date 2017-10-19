@@ -3,6 +3,7 @@
 const uuid = require('uuid');
 
 class Note {
+
   constructor(config) {
     this.id = uuid.v1();
     this.createdOn = new Date(); 
