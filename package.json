@@ -4,11 +4,10 @@
   "description": "![cf](https://i.imgur.com/7v5ASc8.png) Lab 08: Vanilla REST API ======",
   "main": "index.js",
   "directories": {
-    "lib": "lib",
-    "test": "test"
+    "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest -i --coverage --verbose"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,10 @@
   },
   "homepage": "https://github.com/goozgooz/lab-08-rest#readme",
   "dependencies": {
+    "expect": "^21.2.1",
     "fs-extra": "^4.0.2",
+    "jest": "^21.2.1",
+    "superagent": "^3.7.0",
     "uuid": "^3.1.0"
   }
 }
