@@ -26,7 +26,7 @@ describe('api/notes', () => {
       return superagent.get('http://localhost:3000/api/notes')
         .then(res => {
           expect(res.status).toEqual(200);
-        }) 
+        });
     });
   });
 });
